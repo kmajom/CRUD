@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+  integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+  crossorigin="anonymous"></script>
+  <script src="/static/main.js"></script>
+  
+   <link rel="stylesheet" href="/static/style.css">
+    <title>Flask REST API</title>
+</head>
+<body>
+    <div class="main">
+        <form id="updateproductForm" name="updateproductForm" >
+            product ID:
+            <br>
+            <input id="id"  type="text" name="id" value="">
+            <br>
+            product name:
+            <br>
+            <input id="name"  type="text" name="name" value="">
+            <br>
+            description:
+            <br>
+            <input  id="description" type="text" name="description" value="">
+            <br>
+            price:
+            <br>
+            <input id="price" type="number" name="price" value="">
+            <br>
+            quantity:
+            <br>
+            <input id="qty" type="number" name="qty" value="">
+            <br><br>
+            <input type="button" value="Update product" onclick=updateProduct()>
+        </form>
+    </div> 
+  
+    <script>getOneProduct()
+   
+    </script>
+</body>
+</html>

@@ -48,6 +48,11 @@ def index():
 def create_product():
     return render_template('productform.html',reload = time.time())
 
+#productform.html
+@app.route('/productupdateform')
+def get_one_product():
+    return render_template('productupdateform.html',reload = time.time())
+
 
 # Create Product
 @app.route('/product', methods=['POST'])

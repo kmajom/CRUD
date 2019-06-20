@@ -53,7 +53,7 @@ function CreateTableFromJSON(response) {
 			}
 			//add buttons with ID
 			var updateButton = tr.insertCell(-1);
-			updateButton.innerHTML = '<button onclick="getOneProduct(' + res[i].id + ')">UPDATE</button>';
+			updateButton.innerHTML = '<button onclick="redirectToUpdate(' + res[i].id + ')">UPDATE</button>';
 
 			var deleteButton = tr.insertCell(-1);
 			deleteButton.innerHTML = '<button onclick="deleteProduct(' + res[i].id + ')">DELETE</button>';
@@ -64,23 +64,43 @@ function CreateTableFromJSON(response) {
 	divContainer.appendChild(table);
 };
 
-function getOneProduct(id) {
+function redirectToUpdate(id) {
+	window.location.href = "/productupdateform?id=" +id;
+	
+};
+function getOneProduct() {
+	//kiszedjuk az URL-bol az id-t
+	const urlParams  = new URLSearchParams(window.location.search);
+	const id = urlParams.get('id');
+	
 	const xhr = new XMLHttpRequest();
 
 	const url = "/product/" + id;
 
 	xhr.responseType = 'json';
 
+	
+
 	xhr.onreadystatechange = () => {
-	if (xhr.readyState === XMLHttpRequest.DONE) {
-			return xhr.response;
+	if (xhr.readyState === XMLHttpRequest.DONE) {		
+		let res = xhr.response;
+		
+		document.getElementById('id').value = res.id;
+		document.getElementById('name').value = res.name;
+		document.getElementById('description').value = res.description;
+		document.getElementById('price').value = res.price;
+		document.getElementById('qty').value = res.qty;
+		console.log(res.id);
 		}
 	};
 
-	xhr.open('GET', url, true);
+	xhr.open('GET', url);
 
 	xhr.send();
+	
+	
 };
+
 function deleteProduct(id) {
 	const xhr = new XMLHttpRequest();
 
@@ -131,9 +151,49 @@ function createProduct() {
 	};
 
 	xhr.open('POST', url);
-	xhr.setRequestHeader('Content-type','application/json')
+	xhr.setRequestHeader('Content-type','application/json');
 	xhr.send(jsonData);
 
 	window.location.href = "../";
 }
+
+function updateProduct() {
+	const xhr = new XMLHttpRequest();
+	const id = document.getElementById('id').value;
+
+	const url = "/product/" + id;
+	
+	const formElement = document.getElementById('updateproductForm');
+	console.log(formElement);
+	const formData = new FormData(formElement);
+	
+	const object = {};
+	formData.forEach((value, key) => {object[key] = value});	
+	var jsonData = JSON.stringify(object);
+	/*
+	const data = JSON.stringify({		
+		"name": "feszület",
+		"description": "ciklamen",
+		"price": 5.00,
+		"qty": 20
+	});
+	*/
+	xhr.responseType = 'json';
+
+	xhr.onreadystatechange = () => {
+	if (xhr.readyState === XMLHttpRequest.DONE) {
+		
+		console.log(jsonData);
+		
+		return xhr.response;
+		}
+	};
+
+	xhr.open('PUT', url, true);
+	xhr.setRequestHeader('Content-type','application/json');
+	xhr.send(jsonData);
+
+	window.location.href = "../";
+}
+
 
